@@ -1,68 +1,76 @@
 # @label "Source Type"
 # @options ["url", "repository"]
 variable "source_type" {
-  type = string
+  type        = string
   description = "Source type of the chart"
-  default = "repository"
+  default     = "repository"
 }
 
 # @label "Chart URL"
 # @show_if "source_type=url"
 variable "chart_url" {
-  type = string
+  type        = string
   description = "URL to download the chart"
-  default = ""
+  default     = ""
 }
 
 # @label "Chart Repository"
 # @show_if "source_type=repository"
 variable "chart_repository" {
-  type = string
+  type        = string
   description = "Chart repository. e.g., https://charts.bitnami.com/bitnami or oci://192.168.1.100:5000/helm-charts"
-  default = ""
+  default     = ""
 }
 
 # @label "Chart Name"
 # @show_if "source_type=repository"
 variable "chart_name" {
-  type = string
+  type        = string
   description = "Chart name"
-  default = ""
+  default     = ""
 }
 
 # @label "Chart Version"
 # @show_if "source_type=repository"
 variable "chart_version" {
-  type = string
+  type        = string
   description = "Chart version"
-  default = ""
+  default     = ""
 }
 
 # @label "Set Custom Values"
 variable "set_custom_values" {
-  type = bool
+  type        = bool
   description = "Set custom values"
-  default = false
+  default     = false
 }
 
 # @label "Values"
 # @show_if "set_custom_values=true"
 variable "values" {
-  type = any
+  type        = any
   description = "Chart values"
-  default = {}
+  default     = {}
 }
 
-# @hidden
-variable "walrus_metadata_namespace_name" {
-  type        = string
-  description = "Walrus metadata namespace name."
-  default     = ""
-}
+variable "context" {
+  description = <<-EOF
+Receive contextual information. When Walrus deploys, Walrus will inject specific contextual information into this field.
 
-# @hidden
-variable "walrus_metadata_service_name" {
-  type        = string
-  description = "Walrus metadata service name."
-  default     = ""
+Examples:
+```
+context:
+  project:
+    name: string
+    id: string
+  environment:
+    name: string
+    id: string
+  resource:
+    name: string
+    id: string
+```
+EOF
+  type        = map(any)
+  default     = {}
 }
